@@ -33,14 +33,16 @@ class UnarchiveTraverseTool(TraverseTool):
     def __init__(self) -> None:
         super().__init__()
 
-    def handle_zip(self, file: Path):
+    def handle_zip(self, file: Path, path: Path = None):
+        if path == None:
+            path = file.parent / file.stem
+
         zipfile = CustomZipFile(file)
         for zip_info in zipfile.infolist():
-            zipfile.extract_one(zip_info, file.parent / file.stem)
-        zip_root = file.parent / file.stem
+            zipfile.extract_one(zip_info, path)
         zipfile.close()
-        # file.unlink()
-        self.traverse_path(zip_root)
+        file.unlink()
+        self.traverse_path(path)
         
     def hendle_rar(self, file: Path):
         pass
