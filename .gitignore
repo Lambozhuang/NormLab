@@ -1,4 +1,8 @@
-Three Test Cases
+test-case*
 .DS_Store
 UnRAR.exe
 ._*
+*.rar
+*.zip
+__pycache__
+test_*/
