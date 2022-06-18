@@ -1,0 +1,1 @@
+ignore_list = ['__MACOSX', '.DS_Store']
