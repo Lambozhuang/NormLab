@@ -14,13 +14,12 @@ class TraverseTool():
                         flag = True
                         break
 
-                    if flag:
-                        print('DIR ' + str(child), sep='\t')
-                        self.traverse_path(child)
+                    if flag: # not empty
+                        self.check_dir(child)
                     else:
-                        print('EMPTY DIR ' + str(child), sep='\t')
+                        child.rmdir()
                 elif child.is_file():
-                    print('FILE ' + str(child), sep='\n')
+                    # print('FILE ' + str(child), sep='\n')
                     if child.suffix == '.zip':
                         self.handle_zip(child)
                     elif child.suffix == '.rar':
@@ -28,10 +27,14 @@ class TraverseTool():
                     else:
                         self.handle_other(child)
                 else:
-                    print('others')
+                    pass
+                    # print('others')
 
     def check_ignore(self, path: Path) -> bool:
         return True
+
+    def check_dir(self, path: Path):
+        self.traverse_path(path)
 
     def handle_zip(self, file: Path):
         pass
