@@ -7,8 +7,10 @@ class TraverseTool():
     def traverse_path(self, parent: Path):
         if parent.is_file():
             self.handle_file(parent)
-        else:
+        elif parent.is_dir():
+            empty = True
             for child in parent.iterdir():
+                empty = False
                 if self.check_ignore(child):
                     if child.is_dir():
 
@@ -26,6 +28,9 @@ class TraverseTool():
                         self.handle_file(child)
                     else:
                         pass
+            if empty:
+                parent.rmdir()
+
     def check_ignore(self, path: Path) -> bool:
         if path.name in ignore_list:
             return False

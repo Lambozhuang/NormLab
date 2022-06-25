@@ -1,8 +1,10 @@
 from zipfile import *
 from rarfile import *
+from pathlib import Path
 from filter_tool import check_chaoxing_file
 from traverse_tool import TraverseTool
-from pathlib import Path
+from common_tool import *
+
 
 class ArchiveFile:
     def __init__(self) -> None:
@@ -11,16 +13,14 @@ class ArchiveFile:
     def extract_all(self, path: Path)  :
         self.extractall(path)
 
-    def extract_one(self, zip_info: ZipInfo, path: Path):
-        # TODO: infolist 自己就有，不用传进来
-        try:
-            zip_info.filename = zip_info.filename.encode('cp437').decode('gbk')
-        except UnicodeDecodeError:
-            zip_info.filename = zip_info.filename.encode('cp437').decode('utf-8')
-        except UnicodeDecodeError:
-            pass
-        if check_chaoxing_file(zip_info.filename):
-            self.extract(zip_info, path)
+    def extract_one(self, info, out_path: Path):
+        if info.filename not in ignore_list:
+            try:
+                info.filename = info.filename.encode('cp437').decode('gbk')
+            except UnicodeDecodeError:
+                info.filename = info.filename.encode('cp437').decode('utf-8')
+            if check_chaoxing_file(info.filename):
+                self.extract(info, out_path)
     
 class CustomZipFile(ArchiveFile, ZipFile):
     def __init__(self, file: Path) -> None:
@@ -37,21 +37,12 @@ class UnarchiveTool(TraverseTool):
         super().__init__()
         self.ArchiveClass = ArchiveFile
 
-    # def handle_zip(self, file: Path, path: Path = None):
-    #     if path == None:
-    #         path = file.parent / file.stem
-
-    #     zipfile = CustomZipFile(file)
-    #     for zip_info in zipfile.infolist():
-    #         zipfile.extract_one(zip_info, path)
-    #     zipfile.close()
-    #     # file.unlink()
-    #     print(path)
-    #     self.traverse_path(path)
-
-    def handle_file(self, path: Path) -> None:
+    def handle_file(self, path: Path, output_path: Path = None) -> None:
         if self.check_file_type(path.suffix):
-            out_path = path.parent / path.stem
+            if output_path == None:
+                out_path = path.parent / path.stem
+            else:
+                out_path = output_path
             archive_file = self.ArchiveClass(path)
             for info in archive_file.infolist():
                 archive_file.extract_one(info, out_path)

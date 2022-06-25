@@ -4,7 +4,7 @@ from filter_tool import *
 from archive_tool import UnarchiveTool
 from norm_lab import LabController
 
-def test_filter():
+def test_case_01():
     root_zip_path = Path('./tests/test-case-01/ZipInner/Lab01-中文.zip')
     # root_zip_path = Path('./tests/test-case-01/ZipOuter/Lab01-中文.zip')
     expected_path = Path('./tests/test-case-01/ExpectedOutput/')
