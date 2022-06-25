@@ -1,27 +1,21 @@
 from pathlib import Path
-from filter_tool import FilterTraverseTool
-from archive_tool import UnarchiveTraverseTool
 from os import walk, path
+from filter_tool import *
+from archive_tool import UnarchiveTool
+from norm_lab import LabController
 
 def test_filter():
-    # root_zip_path = Path('./tests/test-case-01/ZipInner/Lab01-中文.zip')
-    # output_path = Path('./tests/test-case-01/ZipInner-Output/')
-
-    root_zip_path = Path('./tests/test-case-01/ZipOuter/Lab01-中文.zip')
-    output_path = Path('./tests/test-case-01/ZipOuter-Output/')
-
+    root_zip_path = Path('./tests/test-case-01/ZipInner/Lab01-中文.zip')
+    # root_zip_path = Path('./tests/test-case-01/ZipOuter/Lab01-中文.zip')
     expected_path = Path('./tests/test-case-01/ExpectedOutput/')
 
-    archive_tool = UnarchiveTraverseTool()
-    archive_tool.handle_zip(root_zip_path, output_path / root_zip_path.stem)
+    test_lab = LabController(root_zip_path)
 
-    root_path = output_path
+    test_lab.execute(UnarchiveTool())
+    test_lab.execute(FileFilterTool())
+    test_lab.execute(StructureFilterTool())
 
-    filter_tool = FilterTraverseTool()
-    filter_tool.traverse_path(root_path) # filter ignore
-    filter_tool.traverse_path(root_path) # prune tree
-
-    assert compare_path(output_path, expected_path)
+    assert compare_path(root_zip_path.parent, expected_path)
 
 
 def compare_path(output: Path, expected: Path):
