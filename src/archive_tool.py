@@ -57,7 +57,6 @@ class UnarchiveTool(TraverseTool):
             self.ArchiveClass = CustomZipFile
             return True
         elif suffix == '.rar':
-            return False
             self.ArchiveClass = CustomRarFile
             return True
         else:
