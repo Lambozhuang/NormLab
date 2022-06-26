@@ -1,15 +1,15 @@
 from pathlib import Path
 from os import walk, path
-from filter_tool import *
-from archive_tool import *
-from norm_lab import LabController, Normlab
+from src.filter_tool import *
+from src.archive_tool import *
+from src.norm_lab import LabController, Normlab
 
 
 def test_case_03():
     root_zip_path = Path('./tests/test-case-03/Lab03-JUnit for Unit Test.zip')
-    output_path = Path('./tests/test-case-03/Output/Lab03-JUnit for Unit Test')
+    output_path = Path('./tests/test-case-03/Output/')
     info_path = Path('./student_info/International Student List.csv')
-    expected_path = Path('./tests/test-case-03/Output-Expected/Lab03-JUnit for Unit Test')
+    expected_path = Path('./tests/test-case-03/Output-Expected/')
 
     test_normlab = Normlab(root_zip_path, output_path, info_path)
     test_normlab.execute(UnarchiveTool())

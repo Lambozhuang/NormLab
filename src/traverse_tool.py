@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from pathlib import Path
 from tkinter import W
-from common_tool import ignore_list
+from src.common_tool import ignore_list
 
 class TraverseTool():
     def traverse_path(self, parent: Path):
@@ -13,17 +13,14 @@ class TraverseTool():
                 empty = False
                 if self.check_ignore(child):
                     if child.is_dir():
-
-                        # Check empty
-                        flag = False
+                        child_empty = True
                         for _ in child.iterdir():
-                            flag = True
+                            child_empty = False
                             break
-
-                        if flag: # not empty
-                            self.check_dir(child)
-                        else:
+                        if child_empty:
                             child.rmdir()
+                        else:
+                            self.check_dir(child)
                     elif child.is_file():
                         self.handle_file(child)
                     else:

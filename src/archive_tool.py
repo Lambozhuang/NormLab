@@ -1,9 +1,9 @@
 from zipfile import *
 from rarfile import *
 from pathlib import Path
-from filter_tool import check_chaoxing_file
-from traverse_tool import TraverseTool
-from common_tool import *
+from src.filter_tool import check_chaoxing_file
+from src.traverse_tool import TraverseTool
+from src.common_tool import *
 
 
 class ArchiveFile:

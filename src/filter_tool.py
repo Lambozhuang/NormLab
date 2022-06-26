@@ -1,8 +1,8 @@
 from pathlib import Path
 from thefuzz import fuzz
 from pip import List
-from traverse_tool import TraverseTool
-from common_tool import *
+from src.traverse_tool import TraverseTool
+from src.common_tool import *
 from shutil import rmtree
 from os import listdir
 
@@ -42,8 +42,7 @@ class StructureFilterTool(TraverseTool):
         super().__init__()
 
     def check_dir(self, path: Path):
-        if fuzz.ratio(path.parent.name, path.name) > 50 and len(listdir(str(path.parent))) == 1: # TODO: implement FUZZ
-            # print(path)
+        if fuzz.ratio(path.parent.name, path.name) > 50 and len(listdir(str(path.parent))) == 1:
             path = path.replace(path.parent / 'temp')
             for child in path.iterdir():
                 pass

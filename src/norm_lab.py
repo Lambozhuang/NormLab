@@ -2,9 +2,11 @@ from pathlib import Path
 from zipfile import *
 import csv
 from pip import List
-from archive_tool import CustomZipFile, UnarchiveTool
-from filter_tool import *
-from traverse_tool import TraverseTool
+import src.archive_tool
+import src.filter_tool
+from src.archive_tool import CustomZipFile, UnarchiveTool
+from src.filter_tool import *
+from src.traverse_tool import TraverseTool
 
 class LabController():
     def __init__(self, lab_name: str, zip_path: Path, output_path: Path, id: str, full_name: str, short_name: str) -> None:
@@ -18,9 +20,9 @@ class LabController():
         self.__doc_path_list: List[Path] = []
 
     def execute(self, tool: TraverseTool) -> None:
-        if type(tool) == UnarchiveTool:
+        if type(tool) == src.archive_tool.UnarchiveTool:
             tool.traverse_path(self.__zip_path)
-        elif type(tool) is FindDocTool:
+        elif type(tool) == src.filter_tool.FindDocTool:
             name = self.__lab_name + '-' + self.__id + '-' + self.__short_name
             self.__path = self.__path.replace(self.__path.parent / name)
             tool.reset()
@@ -42,14 +44,11 @@ class LabController():
         else:
             tool.traverse_path(self.__path)
 
-    def get_doc_path_list(self):
-        return self.__doc_path_list
-
 class Normlab():
     def __init__(self, path: Path, output_path: Path, info_path: Path) -> None:
         self.__lab_name = str(path.stem.split('-')[0])
         self.__zip_path = path
-        self.__output_path = output_path
+        self.__output_path = output_path / self.__zip_path.stem
         self.__student_info_path = info_path
         self.__student_info = self.get_student_info()
         self.__controller_list: List[LabController] = []
@@ -80,8 +79,6 @@ class Normlab():
             id = lab.stem.split('-')[0]
             full_name = self.get_full_name(id)
             short_name = self.get_short_name(id)
-            # print(id)
-            # print(short_name)
             new_controller = LabController(lab_name=self.__lab_name, zip_path=lab, output_path=self.__output_path, id=id, full_name=full_name, short_name=short_name)
             self.__controller_list.append(new_controller)
     

@@ -2,9 +2,8 @@ from pathlib import Path
 from os import walk, path
 from filter_tool import *
 from archive_tool import *
-
-
 from norm_lab import LabController, Normlab
+
 
 def test_case_02():
     root_zip_path = Path('./tests/test-case-02/Lab03-JUnit for Unit Test.zip')
