@@ -41,15 +41,3 @@ class TraverseTool():
 
     def handle_file(self, path: Path) -> None:
         pass
-
-    def handle_zip(self, file: Path):
-        pass
-        # print('ZIP ', file.name)
-    
-    def handle_rar(self, file: Path):
-        pass
-        # print('RAR ', file.name)
-
-    def handle_other(self, file: Path):
-        pass
-        # print('OTHER ', file.name)
