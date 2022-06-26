@@ -26,19 +26,21 @@ class LabController():
             tool.reset()
             tool.traverse_path(self.__path)
             self.__doc_path_list = tool.get_doc_path_list()
-            count = 1
-            for doc in self.__doc_path_list:
+            if len(self.__doc_path_list) <= 1:
+                doc = self.__doc_path_list[0]
                 _name = name
-                if count != 1:
-                    _name += '-' + str(count)
                 _name += doc.suffix
                 doc.replace(self.__output_path / _name)
-                count += 1
+            elif len(self.__doc_path_list) > 1:
+                count = 1
+                for doc in self.__doc_path_list:
+                    _name = name
+                    _name += '-' + str(count)
+                    _name += doc.suffix
+                    doc.replace(self.__output_path / _name)
+                    count += 1
         else:
             tool.traverse_path(self.__path)
-
-    def export(self, lab_name: str, out_path: Path) -> None:
-        pass
 
     def get_doc_path_list(self):
         return self.__doc_path_list
@@ -95,10 +97,4 @@ class Normlab():
 
     def execute(self, tool: TraverseTool):
         for controller in self.__controller_list:
-            # print(controller.get_name())
-            # print(controller.get_path())
             controller.execute(tool)
-
-    def export(self):
-        for controller in self.__controller_list:
-            controller.export(self.__lab_name, self.__output_path)
