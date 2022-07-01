@@ -1,9 +1,9 @@
 from logging import root
 from pathlib import Path
 from os import walk, path
-from filter_tool import *
-from archive_tool import UnarchiveTool
-from norm_lab import LabController
+from src.filter_tool import *
+from src.archive_tool import UnarchiveTool
+from src.norm_lab import LabController
 
 def test_case_01():
     root_zip_path_1 = Path('./tests/test-case-01/ZipInner/Lab01-中文.zip')

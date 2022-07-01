@@ -1,8 +1,8 @@
 from pathlib import Path
 from os import walk, path
-from filter_tool import *
-from archive_tool import *
-from norm_lab import LabController, Normlab
+from src.filter_tool import *
+from src.archive_tool import *
+from src.norm_lab import LabController, Normlab
 
 
 def test_case_02():
