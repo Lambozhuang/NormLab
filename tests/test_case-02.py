@@ -7,9 +7,9 @@ from src.norm_lab import LabController, Normlab
 
 def test_case_02():
     root_zip_path = Path('./tests/test-case-02/Lab03-JUnit for Unit Test.zip')
-    output_path = Path('./tests/test-case-02/Output/Lab03-JUnit for Unit Test')
+    output_path = Path('./tests/test-case-02/Output')
     info_path = Path('./student_info/International Student List.csv')
-    expected_path = Path('./tests/test-case-02/Output-Expected/Lab03-JUnit for Unit Test')
+    expected_path = Path('./tests/test-case-02/Output-Expected')
 
     test_normlab = Normlab(root_zip_path, output_path, info_path)
     test_normlab.execute(UnarchiveTool())
